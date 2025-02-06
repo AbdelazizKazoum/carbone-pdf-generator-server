@@ -26,8 +26,6 @@ export class GeneratePdfService {
     } catch (error) {
       throw new InternalServerErrorException(error);
     }
-
-    return payload;
   }
 
   findOne(id: number) {
