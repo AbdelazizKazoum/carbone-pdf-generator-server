@@ -13,6 +13,11 @@ export class GeneratePdfController {
 
   @Get()
   findAll() {
-    return this.generatePdfService.findAll();
+    const payload = {
+      firsName: ' Juan',
+      lastName: 'Carlos',
+    };
+
+    return this.generatePdfService.generate(payload);
   }
 }
