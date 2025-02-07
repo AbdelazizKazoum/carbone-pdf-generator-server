@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Res } from '@nestjs/common';
 import { GeneratePdfService } from './generate-pdf.service';
-import { Response } from 'express';
+import { response, Response } from 'express';
 
 @Controller('generate-pdf')
 export class GeneratePdfController {
@@ -12,12 +12,26 @@ export class GeneratePdfController {
   }
 
   @Get()
-  findAll() {
+  async render(@Res() res: Response) {
     const payload = {
       firsName: ' Juan',
       lastName: 'Carlos',
+      region: 'Meknes',
+      datePV: '2012/02/12',
+      companie: 'Meknes',
+      center: 'Rabat',
     };
 
-    return this.generatePdfService.generate(payload);
+    const pdfBuffer = await this.generatePdfService.generate(
+      payload,
+      'template.odt',
+      'docx',
+    );
+
+    res.setHeader('Content-Type', 'application/pdf');
+    // res.setHeader('Content-Disposition', 'attachment; filename=output.pdf');
+    res.send(pdfBuffer);
+
+    return payload;
   }
 }
